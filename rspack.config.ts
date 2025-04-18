@@ -33,7 +33,7 @@ export default defineConfig({
     // publicPath: "http://localhost:3000/", 
     publicPath: "http://187.33.150.229:30000/"
   }, 
-
+ 
   experiments: {
     css: true,
   },
