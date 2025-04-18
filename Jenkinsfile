@@ -2,41 +2,47 @@ pipeline {
     agent any
 
     environment {
-        IMAGE = 'organix-app:local'
-        DEPLOYMENT = 'organix-app'
-        NAMESPACE = 'default'
+        IMAGE_NAME = "organix-app"
+        IMAGE_TAG = "latest"
+        K8S_NAMESPACE = "default"
+        DOCKER_REGISTRY = "localhost:5000" // si no usás registry, quitá esto
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/marco-cortes/organix-app.git',
-                credentialsId: 'github-credentials'
+                git 'https://github.com/marco-cortes/organix-app.git'
             }
         }
 
-        // stage('Build Vue') {
-        //     steps {
-        //         sh 'npm install'
-        //         sh 'npm run build'
-        //     }
-        // }
-
-        stage('Build Docker') {
+        stage('Build Docker Image') {
             steps {
-                sh 'docker build -t organix-app:local .'
+                script {
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                }
             }
         }
 
-        stage('Deploy to k3s') {
+        stage('Push Image (opcional)') {
+            when {
+                expression { return env.DOCKER_REGISTRY != "" }
+            }
             steps {
-                sh '''
-                    kubectl apply -f ./k8s/deployment.yaml
-                    kubectl apply -f ./k8s/service.yaml
-                    kubectl apply -f ./k8s/ingress.yaml
-                    kubectl rollout restart deployment/organix-app
-                '''
+                script {
+                    sh """
+                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+                    docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
+
+        stage('Deploy to KS3') {
+            steps {
+                script {
+                    sh 'kubectl apply -f k8s/deployment.yaml'
+                    sh 'kubectl apply -f k8s/service.yaml'
+                }
             }
         }
     }

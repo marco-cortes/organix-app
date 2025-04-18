@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: organix-app
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -14,7 +15,6 @@ spec:
     spec:
       containers:
         - name: organix-app
-          image: organix-app:local
-          imagePullPolicy: Never
+          image: organix-app:latest # O usa localhost:5000/organix-app:latest si empujás al registry
           ports:
             - containerPort: 3000
