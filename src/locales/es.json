@@ -1,0 +1,13 @@
+{
+    "project_name": "Organix",
+    "header": "Portal Administrativo",
+    "header_help": "Ayuda",
+    "header_settings": "Configuración",
+    "routes_dashboard": "Dashboard",
+    "routes_employees": "Colaboradores",
+    "routes_attendance": "Horarios",
+    "routes_management": "Administración de salidas",
+    "routes_documents": "Documentos",
+    "dashboard_welcome": "Bienvenido de nuevo Administrador",
+    "dashboard_text": "Este es un resumen de tu departamento de RRHH"
+}

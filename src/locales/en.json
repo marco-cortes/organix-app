@@ -1,0 +1,17 @@
+{
+    "project_name": "Organix",
+    "header": "Admin Portal",
+    "header_help": "Help",
+    "header_settings": "Settings",
+    "routes_dashboard": "Dashboard",
+    "routes_employees": "Employees",
+    "routes_attendance": "Attendance",
+    "routes_management": "Leave Management",
+    "routes_documents": "Documents",
+    "dashboard_welcome": "Welcome back, Admin",
+    "dashboard_text": "Here's an overview of your HR department",
+    "dashboard_card_employees": "Total Employees",
+    "dashboard_card_attendance": "Attendance Rate",
+    "dashboard_card_leaves": "Pending Leaves",
+    "dashboard_card_hires": "New Hires"
+}

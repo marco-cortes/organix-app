@@ -1,0 +1,49 @@
+/* Typography */
+.text__title {
+    font-size: 1.4rem !important;
+}
+
+.text__mn {
+    font-size: 0.7rem;
+}
+
+.text__sm {
+    font-size: 0.8rem;
+}
+
+
+/* Weight */
+
+.font__light {
+    font-weight: 300;
+}
+
+.font__normal {
+    font-weight: 500;
+}
+
+.font__semibold {
+    font-weight: 600;
+}
+
+.font__bold {
+    font-weight: 700;
+}
+
+.font__bolder {
+    font-weight: 900;
+}
+
+/* Colors */
+
+.text__primary {
+    color: var(--primary-color);
+}
+
+.text__light {
+    color: var(--light-gray-color);
+}
+
+.text__gray {
+    color: var(--muted-color);
+}
