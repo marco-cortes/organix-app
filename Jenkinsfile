@@ -10,8 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/marco-cortes/organix-app',
-                gitTool: 'My Git'
+                git url: 'https://github.com/marco-cortes/organix-app'
             }
         }
 
