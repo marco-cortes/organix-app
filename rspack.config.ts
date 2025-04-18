@@ -21,7 +21,7 @@ export default defineConfig({
   },
 
   devServer: {
-    port: 5000,
+    port: 80,
     historyApiFallback: true,
     watchFiles: [path.resolve(__dirname, "src")],
   },
@@ -30,7 +30,7 @@ export default defineConfig({
     // You need to set a unique value that is not equal to other applications
     uniqueName: "organix_app",
     // publicPath must be configured if using manifest
-    publicPath: "http://localhost:5000/",
+    publicPath: "http://localhost:80/",
   },
 
   experiments: {

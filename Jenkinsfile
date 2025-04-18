@@ -16,12 +16,12 @@ pipeline {
             }
         }
 
-        stage('Build Vue') {
-            steps {
-                sh 'npm install'
-                sh 'npm run build'
-            }
-        }
+        // stage('Build Vue') {
+        //     steps {
+        //         sh 'npm install'
+        //         sh 'npm run build'
+        //     }
+        // }
 
         stage('Build Docker') {
             steps {
