@@ -25,7 +25,7 @@ pipeline {
 
         stage('Build Docker') {
             steps {
-                sh 'docker build -t $IMAGE .'
+                sh 'docker build -t organix-app:local .'
             }
         }
 
@@ -35,7 +35,7 @@ pipeline {
                     kubectl apply -f ./k8s/deployment.yaml
                     kubectl apply -f ./k8s/service.yaml
                     kubectl apply -f ./k8s/ingress.yaml
-                    kubectl rollout restart deployment/$DEPLOYMENT
+                    kubectl rollout restart deployment/organix-app
                 '''
             }
         }
