@@ -38,7 +38,7 @@ export default defineConfig({
     css: true,
   },
 
-  module: {
+  module: { 
     rules: [
       {
         test: /\.vue$/,
