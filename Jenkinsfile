@@ -3,46 +3,39 @@ pipeline {
 
     environment {
         IMAGE_NAME = "organix-app"
-        IMAGE_TAG = "latest"
-        K8S_NAMESPACE = "default"
-        DOCKER_REGISTRY = "localhost:5000" // si no usás registry, quitá esto
+        LOCAL_REGISTRY = "localhost:5000"
+        GIT_CREDENTIALS = 'github-credentials'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clonar Repositorio') {
             steps {
-                git branch: 'main', url: 'https://github.com/marco-cortes/organix-app.git', credentialsId: 'github-credentials'
+                git credentialsId: "${env.GIT_CREDENTIALS}", url: 'https://github.com/marco-cortes/organix-app.git', branch: 'main'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                    sh "docker build -t ${IMAGE_NAME}:latest ."
                 }
             }
         }
 
-        stage('Push Image (opcional)') {
-            when {
-                expression { return env.DOCKER_REGISTRY != "" }
-            }
+        stage('Tag y Push al registry local') {
             steps {
                 script {
-                    sh """
-                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                    docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                    """
+                    def fullImage = "${LOCAL_REGISTRY}/${IMAGE_NAME}:latest"
+                    sh "docker tag ${IMAGE_NAME}:latest ${fullImage}"
+                    sh "docker push ${fullImage}"
                 }
             }
         }
 
-        stage('Deploy to KS3') {
+        stage('Deploy en Kubernetes') {
             steps {
-                script {
-                    sh 'kubectl apply -f k8s/deployment.yaml'
-                    sh 'kubectl apply -f k8s/service.yaml'
-                }
+                sh "kubectl apply -f k8s/deployment.yaml"
+                sh "kubectl apply -f k8s/service.yaml"
             }
         }
     }

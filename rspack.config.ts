@@ -21,7 +21,7 @@ export default defineConfig({
   },
 
   devServer: {
-    port: 80,
+    port: 3000,
     historyApiFallback: true,
     watchFiles: [path.resolve(__dirname, "src")],
   },
