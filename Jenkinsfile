@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE = 'organix-app:local'
-        DEPLOYMENT = 'organix-app',
+        DEPLOYMENT = 'organix-app'
         NAMESPACE = 'default'
     }
 
