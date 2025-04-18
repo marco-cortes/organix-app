@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organix-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: organix-app
+  template:
+    metadata:
+      labels:
+        app: organix-app
+    spec:
+      containers:
+        - name: organix-app
+          image: organix-app:local
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000

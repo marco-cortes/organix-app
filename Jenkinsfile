@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/usuario/mi-repo.git'
+                git url: 'https://github.com/marco-cortes/organix-app'
             }
         }
 
@@ -20,19 +20,21 @@ pipeline {
             }
         }
 
-        stage('Deploy to k3s') {
+        stage('Desplegar en k3s') {
             steps {
                 sh '''
-                    kubectl set image deployment/$DEPLOYMENT $DEPLOYMENT=$IMAGE \
-                      --namespace=$NAMESPACE || echo "Deployment aún no existe"
+                    kubectl apply -f k8s/deployment.yaml
+                    kubectl apply -f k8s/service.yaml
+                    kubectl apply -f k8s/ingress.yaml
                 '''
             }
         }
 
-        stage('Apply deployment si no existe') {
+        stage('Actualizar imagen') {
             steps {
-                sh 'kubectl apply -f k8s/deployment.yaml || true'
+                sh 'kubectl rollout restart deployment/$DEPLOYMENT'
             }
         }
+
     }
 }
