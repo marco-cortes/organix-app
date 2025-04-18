@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE = 'organix-app:local'
-        DEPLOYMENT = 'organix-app'
+        DEPLOYMENT = 'organix-app',
         NAMESPACE = 'default'
     }
 
@@ -14,27 +14,28 @@ pipeline {
             }
         }
 
+        stage('Build Vue') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+
         stage('Build Docker') {
             steps {
                 sh 'docker build -t $IMAGE .'
             }
         }
 
-        stage('Desplegar en k3s') {
+        stage('Deploy to k3s') {
             steps {
                 sh '''
                     kubectl apply -f k8s/deployment.yaml
                     kubectl apply -f k8s/service.yaml
                     kubectl apply -f k8s/ingress.yaml
+                    kubectl rollout restart deployment/$DEPLOYMENT
                 '''
             }
         }
-
-        stage('Actualizar imagen') {
-            steps {
-                sh 'kubectl rollout restart deployment/$DEPLOYMENT'
-            }
-        }
-
     }
 }
