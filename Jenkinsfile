@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git credentialsId: "${env.GIT_CREDENTIALS}", url: "${env.GIT_URL}", branch: '"${env.GIT_BRANCH}"
+                git credentialsId: "${env.GIT_CREDENTIALS}", url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}"
             }
         }
 
