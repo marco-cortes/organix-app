@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${IMAGE_NAME}
+  name: organix-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ${IMAGE_NAME}
+      app: organix-app
   template:
     metadata:
       labels:
-        app: ${IMAGE_NAME}
+        app: organix-app
     spec:
       containers:
-        - name: ${IMAGE_NAME}
-          image: ${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}
+        - name: organix-app
+          image: localhost:5000/organix-app:IMAGE_TAG
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: ${CONTAINER_PORT}
+            - containerPort: 3000
