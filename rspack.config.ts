@@ -42,7 +42,7 @@ export default defineConfig({
     rules: [ 
       {
         test: /\.vue$/,
-        loader: "vue-loader",
+        loader: "vue-loader", 
         
       },
       {
