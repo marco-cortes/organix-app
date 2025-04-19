@@ -47,3 +47,9 @@
 .text__gray {
     color: var(--muted-color);
 }
+
+/* Align */
+
+.text__center {
+    text-align: center;
+}

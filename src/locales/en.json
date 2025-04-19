@@ -13,5 +13,7 @@
     "dashboard_card_employees": "Total Employees",
     "dashboard_card_attendance": "Attendance Rate",
     "dashboard_card_leaves": "Pending Leaves",
-    "dashboard_card_hires": "New Hires"
+    "dashboard_card_hires": "New Hires",
+    "ui_coming_soon": "We're Coming Soon",
+    "ui_coming_soon_text": "Our website is under construction. We'll be launching soon with something amazing!"
 }

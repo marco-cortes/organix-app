@@ -5,6 +5,7 @@ import locales from '../plugins/locales';
 import Dashboard from '../modules/dashboard/Dashboard.vue';
 import Employees from '../modules/employees/Employees.vue';
 import Projects from '../modules/projects/Projects.vue';
+import component from '../components/ui/ComingSoon.vue'
 
 const t = locales.global.t;
 const base = '/';
@@ -19,12 +20,14 @@ export const routes = [
     {
         path: build(t('routes_employees')),
         name: `${t('routes_employees')}`,
-        component: Employees
+        // component: Employees
+        component
     },
     {
         path: build(t('routes_attendance')),
         name: `${t('routes_attendance')}`,
-        component: Projects
+        // component: Projects
+        component
     }
 ]
 
