@@ -2,13 +2,9 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "organix-app"
-        LOCAL_REGISTRY = "localhost:5000"
         GIT_CREDENTIALS = "github-credentials"
-        HOST_DEV = "localhost:3000"
-        HOST_PROD = "187.33.150.229"
-        PORT = "30000"
-
+        GIT_URL = "https://github.com/marco-cortes/organix-app.git"
+        GIT_BRANCH = "main"
 
         IMAGE_NAME = "organix-app"
         PORT_SERVICE = "80"
@@ -22,7 +18,7 @@ pipeline {
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git credentialsId: "${env.GIT_CREDENTIALS}", url: 'https://github.com/marco-cortes/organix-app.git', branch: 'main'
+                git credentialsId: "${env.GIT_CREDENTIALS}", url: "${env.GIT_URL}", branch: '"${env.GIT_BRANCH}"
             }
         }
 
