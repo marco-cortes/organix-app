@@ -39,7 +39,7 @@ export default defineConfig({
   },
 
   module: {
-    rules: [
+    rules: [ 
       {
         test: /\.vue$/,
         loader: "vue-loader",
