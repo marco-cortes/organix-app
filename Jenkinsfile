@@ -68,28 +68,10 @@ pipeline {
             }
         }
         
-        stage('Limpiar imágenes Docker antiguas') {
+        stage('Limpiar Imagenes docker') {
             steps {
                 script {
-                    sh """
-                        docker images "${HOST_REGISTRY}/${IMAGE_NAME}" --format "{{.Repository}}:{{.Tag}} {{.CreatedAt}}" \\
-                        | sort -r \\
-                        | tail -n +6 \\
-                        | awk '{print \$1}' \\
-                        | xargs -r docker rmi
-                    """
-                }
-            }
-        }
-
-        stage('Restaurar rspack.config.ts') {
-            steps {
-                script {
-                    sh '''
-                        if [ -f rspack.config.ts.bak ]; then
-                            mv rspack.config.ts.bak rspack.config.ts
-                        fi
-                    '''
+                    sh 'docker image prune -a -f'
                 }
             }
         }
