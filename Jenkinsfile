@@ -23,7 +23,6 @@ pipeline {
                 script {
                     sh """
                         if [ -f rspack.config.ts ]; then
-                            cp rspack.config.ts rspack.config.ts.bak
                             sed -i 's|"${env.DEV_SERVER}"|"${env.PROD_SERVER}"|g' rspack.config.ts
                         fi
                     """
@@ -47,17 +46,21 @@ pipeline {
         stage('Deploy en Kubernetes') {
             steps {
                 script {
-                    // Aplicar deployment.yaml reemplazando variables de entorno con envsubst
+                    env.IMAGE_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+
                     sh """
                         export REGISTRY_URL=${REGISTRY_URL}
                         export IMAGE_NAME=${IMAGE_NAME}
-                        export IMAGE_TAG=${env.IMAGE_TAG}
                         export CONTAINER_PORT=${CONTAINER_PORT}
                         export SERVICE_PORT=${SERVICE_PORT}
                         export PROD_SERVER=${PROD_SERVER}
-                        sh "sed 's|IMAGE_TAG|${env.IMAGE_TAG}|g' envsubst < k8s/deployment.yaml | kubectl apply -f -"
-                        sh "envsubst < k8s/service.yaml | kubectl apply -f -"
-                        sh "kubectl delete pod -l app="${env.IMAGE_NAME}" --ignore-not-found"
+
+                        # Reemplaza IMAGE_TAG sin $ y luego pasa por envsubst
+                        sed 's|IMAGE_TAG|${env.IMAGE_TAG}|g' k8s/deployment.yaml | envsubst | kubectl apply -f -
+
+                        envsubst < k8s/service.yaml | kubectl apply -f -
+
+                        kubectl delete pod -l app=${IMAGE_NAME} --ignore-not-found
                     """
                 }
             }
@@ -86,18 +89,6 @@ pipeline {
                         | awk '{print \$1}' \\
                         | xargs -r docker rmi
                     """
-                }
-            }
-        }
-
-        stage('Restaurar rspack.config.ts') {
-            steps {
-                script {
-                    sh '''
-                        if [ -f rspack.config.ts.bak ]; then
-                            mv rspack.config.ts.bak rspack.config.ts
-                        fi
-                    '''
                 }
             }
         }
