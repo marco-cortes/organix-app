@@ -36,6 +36,7 @@ pipeline {
                     def imageTag = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                     env.IMAGE_TAG = imageTag
                     def fullImage = "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
+                    
                     sh "docker build -t ${fullImage} ."
                     sh "docker push ${fullImage}"
                 }
@@ -45,6 +46,8 @@ pipeline {
         stage('Deploy en Kubernetes') {
             steps {
                 script {
+                    env.IMAGE_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+
                     sh """
                         export REGISTRY_URL=${REGISTRY_URL}
                         export IMAGE_NAME=${IMAGE_NAME}
