@@ -27,7 +27,6 @@ pipeline {
                 script {
                     sh """
                         if [ -f rspack.config.ts ]; then
-                            cp rspack.config.ts rspack.config.ts.bak
                             sed -i 's|"${env.HOST_DEV}"|"${env.HOST_PROD}"|g' rspack.config.ts
                         fi
                     """
