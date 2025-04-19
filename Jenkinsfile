@@ -17,16 +17,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:latest ."
-                }
-            }
-        }
-
-        stage('Tag y Push al registry local') {
-            steps {
-                script {
-                    def fullImage = "${LOCAL_REGISTRY}/${IMAGE_NAME}:latest"
-                    sh "docker tag ${IMAGE_NAME}:latest ${fullImage}"
+                    // Obtener el hash corto del commit como tag
+                    def imageTag = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    env.IMAGE_TAG = imageTag
+                    def fullImage = "${LOCAL_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+                    
+                    sh "docker build -t ${fullImage} ."
                     sh "docker push ${fullImage}"
                 }
             }
@@ -34,8 +30,11 @@ pipeline {
 
         stage('Deploy en Kubernetes') {
             steps {
-                sh "kubectl apply -f k8s/deployment.yaml"
-                sh "kubectl apply -f k8s/service.yaml"
+                script {
+                    // Reemplazar IMAGE_TAG en el archivo YAML antes de aplicar
+                    sh "sed 's|IMAGE_TAG|${env.IMAGE_TAG}|g' k8s/deployment.yaml | kubectl apply -f -"
+                    sh "kubectl apply -f k8s/service.yaml"
+                }
             }
         }
     }

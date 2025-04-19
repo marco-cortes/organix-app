@@ -13,8 +13,8 @@ spec:
         app: organix-app
     spec:
       containers:
-      - name: organix-app
-        image: localhost:5000/organix-app:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
+        - name: organix-app
+          image: localhost:5000/organix-app:IMAGE_TAG
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
