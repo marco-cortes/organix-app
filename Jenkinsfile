@@ -56,7 +56,7 @@ pipeline {
                         export SERVICE_PORT=${SERVICE_PORT}
                         export PROD_SERVER=${PROD_SERVER}
                         sh "sed 's|IMAGE_TAG|${env.IMAGE_TAG}|g' envsubst < k8s/deployment.yaml | kubectl apply -f -"
-                        envsubst < k8s/service.yaml | kubectl apply -f -
+                        sh "envsubst < k8s/service.yaml | kubectl apply -f -"
                         sh "kubectl delete pod -l app="${env.IMAGE_NAME}" --ignore-not-found"
                     """
                 }
