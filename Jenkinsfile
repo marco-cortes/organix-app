@@ -55,7 +55,6 @@ pipeline {
                         export SERVICE_PORT=${SERVICE_PORT}
                         export PROD_SERVER=${PROD_SERVER}
 
-                        # Reemplaza IMAGE_TAG sin $ y luego pasa por envsubst
                         sed 's|IMAGE_TAG|${env.IMAGE_TAG}|g' k8s/deployment.yaml | envsubst | kubectl apply -f -
 
                         envsubst < k8s/service.yaml | kubectl apply -f -
