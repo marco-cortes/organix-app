@@ -45,7 +45,6 @@ pipeline {
         stage('Deploy en Kubernetes') {
             steps {
                 script {
-                    echo "${REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
                     sh """
                         export REGISTRY_URL=${REGISTRY_URL}
                         export IMAGE_NAME=${IMAGE_NAME}
