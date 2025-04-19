@@ -72,7 +72,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker images "${LOCAL_REGISTRY}/${IMAGE_NAME}" --format "{{.Repository}}:{{.Tag}} {{.CreatedAt}}" \\
+                        docker images "${HOST_REGISTRY}/${IMAGE_NAME}" --format "{{.Repository}}:{{.Tag}} {{.CreatedAt}}" \\
                         | sort -r \\
                         | tail -n +6 \\
                         | awk '{print \$1}' \\
