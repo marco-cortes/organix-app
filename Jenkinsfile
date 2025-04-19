@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "organix-app"
         GIT_CREDENTIALS = 'github-credentials'
-        CONTAINER_PORT = "3000"
+        CONTAINER_PORT = "30000"
         SERVICE_PORT = "80"
         REGISTRY_URL = "localhost:5000" 
         DEV_SERVER = "http://localhost:3000"
