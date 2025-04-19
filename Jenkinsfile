@@ -61,32 +61,5 @@ pipeline {
                 }
             }
         }
-
-        // stage('Deploy en Kubernetes') {
-        //     steps {
-        //         script {
-        //             // Aplicar deployment.yaml reemplazando IMAGE_TAG
-        //             sh "sed 's|IMAGE_TAG|${env.IMAGE_TAG}|g' k8s/deployment.yaml | kubectl apply -f -"
-        //             sh "kubectl apply -f k8s/service.yaml"
-
-        //             // Borrar pods actuales para forzar reinicio
-        //             sh "kubectl delete pod -l app=organix-app --ignore-not-found"
-        //         }
-        //     }
-        // }
-        
-        stage('Limpiar imágenes Docker antiguas') {
-            steps {
-                script {
-                    sh """
-                        docker images "${REGISTRY_URL}/${IMAGE_NAME}" --format "{{.Repository}}:{{.Tag}} {{.CreatedAt}}" \\
-                        | sort -r \\
-                        | tail -n +6 \\
-                        | awk '{print \$1}' \\
-                        | xargs -r docker rmi
-                    """
-                }
-            }
-        }
     }
 }
