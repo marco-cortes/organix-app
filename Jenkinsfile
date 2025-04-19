@@ -6,7 +6,7 @@ pipeline {
         GIT_CREDENTIALS = 'github-credentials'
         CONTAINER_PORT = "3000"
         SERVICE_PORT = "80"
-        REGISTRY_URL = "localhost:5000"
+        REGISTRY_URL = "localhost:5000" 
         DEV_SERVER = "http://localhost:3000"
         PROD_SERVER = "http://187.33.150.229:${SERVICE_PORT}"
     }
