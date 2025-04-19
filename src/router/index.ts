@@ -14,20 +14,26 @@ const build = (text: string) => `${base}${text.toLowerCase()}`;
 export const routes = [
     {
         path: base,
-        name: `${t('routes_dashboard')}`,
+        name: t('routes_dashboard'),
         component: Dashboard
     },
     {
         path: build(t('routes_employees')),
-        name: `${t('routes_employees')}`,
+        name: t('routes_employees'),
         // component: Employees
-        component
+        component,
+        props: {
+            title: t('routes_employees')
+        }
     },
     {
         path: build(t('routes_attendance')),
-        name: `${t('routes_attendance')}`,
+        name: t('routes_attendance'),
         // component: Projects
-        component
+        component,
+        props: {
+            title: t('routes_attendance')
+        }
     }
 ]
 
