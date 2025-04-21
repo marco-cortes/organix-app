@@ -5,14 +5,12 @@ pipeline {
         GIT_CREDENTIALS = "github-credentials"
         GIT_URL = "https://github.com/marco-cortes/organix-app.git"
         GIT_BRANCH = "main"
-
         IMAGE_NAME = "organix-app"
         PORT_SERVICE = "80"
         PORT_CONTAINER = "30000"
         HOST_REGISTRY = "localhost:5000"
         HOST_DEV = "http://localhost:3000"
         HOST_PROD = "http://187.33.150.229:${PORT_CONTAINER}"
-
     }
 
     stages {
@@ -57,10 +55,8 @@ pipeline {
                         export PORT_CONTAINER=${PORT_CONTAINER}
                         export PORT_SERVICE=${PORT_SERVICE}
                         export HOST_PROD=${HOST_PROD}
-
                         envsubst < k8s/deployment.yaml | kubectl apply -f -
                         envsubst < k8s/service.yaml | kubectl apply -f -
-
                         kubectl delete pod -l app=${IMAGE_NAME} --ignore-not-found
                     """
                 }

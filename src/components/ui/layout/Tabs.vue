@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
     import { PropType, ref } from 'vue';
-    import { Tab } from '../../../models/ui/Tabs';
+    import { Tab } from '../../../models/ui/tabs/Tabs';
 
     defineProps({
         tabs: {

@@ -39,16 +39,12 @@
         <template #tab-0>
             <h2>Employees</h2>
             <p>Here’s your employee directory.</p>
+            <Table></Table>
         </template>
 
         <template #tab-1>
             <h2>Recent Activity</h2>
             <p>Recent logins, changes, and more...</p>
-        </template>
-
-        <template #tab-2>
-            <h2>New Hires</h2>
-            <p>Information for new hires</p>
         </template>
     </Tabs>
 </template>
@@ -58,7 +54,8 @@
     import Icon from '../../components/ui/Icon.vue';
     import Grid from '../../components/ui/layout/Grid.vue';
     import Tabs from "../../components/ui/layout/Tabs.vue";
-    import { Tab } from '../../models/ui/Tabs';
+    import Table from '../../components/ui/Table.vue';
+    import { Tab } from '../../models/ui/tabs/Tabs';
 
     const tabs: Tab[] = [
         { label: 'Employees', title: 'Employee Directory' },
