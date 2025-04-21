@@ -28,7 +28,7 @@ export default defineConfig({
 
   output: {
     // You need to set a unique value that is not equal to other applications
-    uniqueName: "organix_app",
+    uniqueName: "organix_app", 
     // publicPath must be configured if using manifest
     publicPath: "/",
   }, 
